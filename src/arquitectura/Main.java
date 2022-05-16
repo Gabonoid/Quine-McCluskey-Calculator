@@ -19,11 +19,11 @@ public class Main {
         //Damos inicio al algoritmo de Tabulado
         matrizPrueba.aplicarTabulado();
         
-        System.out.println("\n=============Grupo A=============\n");
+        System.out.println("\n============= Grupo A =============\n");
         Matriz.mostrarGrupos(matrizPrueba.getGrupoA());
-        System.out.println("\n=============Grupo B=============\n");
+        System.out.println("\n============= Grupo B =============\n");
         Matriz.mostrarGrupos(matrizPrueba.getGrupoB());
-        System.out.println("\n=============Grupo C=============\n");
+        System.out.println("\n============= Grupo C =============\n");
         Matriz.mostrarGrupos(matrizPrueba.getGrupoC());
         
         matrizPrueba.mostrarNoUsadas();
