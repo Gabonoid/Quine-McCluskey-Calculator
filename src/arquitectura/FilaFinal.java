@@ -7,9 +7,14 @@ package arquitectura;
 public class FilaFinal {
     
     private byte valor;
-    private byte repeticion = 0;
+    private byte repeticion;
 
     public FilaFinal() {
+    }
+
+    public FilaFinal(byte valor, byte repeticion) {
+        this.valor = valor;
+        this.repeticion = repeticion;
     }
 
     public byte getValor() {
@@ -27,6 +32,12 @@ public class FilaFinal {
     public void setRepeticion(byte repeticion) {
         this.repeticion = repeticion;
     }
+
+    @Override
+    public String toString() {
+        return "FilaFinal{" + "valor=" + valor + ", repeticion=" + repeticion + "}\n";
+    }
+    
     
     
     

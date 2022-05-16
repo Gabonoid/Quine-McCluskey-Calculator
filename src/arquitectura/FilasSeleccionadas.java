@@ -8,6 +8,7 @@ import java.util.Arrays;
  */
 public class FilasSeleccionadas implements Comparable<FilasSeleccionadas>{
     private String nombre;
+    private byte [] nombreByte;
     private byte [] fila;
     private byte numUno;
     private boolean seUso = false;
@@ -16,6 +17,7 @@ public class FilasSeleccionadas implements Comparable<FilasSeleccionadas>{
         this.nombre = nombre;
         this.fila = fila;
         this.numUno = numCeros;
+        nombreToByte();
     }
     
     public FilasSeleccionadas(String nombre, byte[] fila, byte numCeros, boolean seUso) {
@@ -23,17 +25,29 @@ public class FilasSeleccionadas implements Comparable<FilasSeleccionadas>{
         this.fila = fila;
         this.numUno = numCeros;
         this.seUso = seUso;
+        nombreToByte();
     }
     
     public FilasSeleccionadas(String nombre, byte[] fila) {
         this.nombre = nombre;
         this.fila = fila;
+        nombreToByte();
     }
     
     public FilasSeleccionadas(String nombre, byte[] fila, boolean seUso) {
         this.nombre = nombre;
         this.fila = fila;
         this.seUso = seUso;
+        nombreToByte();
+    }
+    
+    private void nombreToByte(){
+            String [] fila = this.nombre.replace(" ","").split(",");
+            byte [] filaNum = new byte [fila.length];
+            for (int i = 0; i < filaNum.length; i++) {
+                filaNum[i] = Byte.parseByte(fila[i]);
+            }
+            this.nombreByte = filaNum;
     }
 
     public boolean isSeUso() {
@@ -66,6 +80,10 @@ public class FilasSeleccionadas implements Comparable<FilasSeleccionadas>{
 
     public void setFila(byte[] fila) {
         this.fila = fila;
+    }
+
+    public byte[] getNombreByte() {
+        return nombreByte;
     }
     
     @Override

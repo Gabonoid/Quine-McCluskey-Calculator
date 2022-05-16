@@ -8,10 +8,10 @@ public class Main {
 
     public static void main(String[] args) {
         //Creamos un arreglo para guardar las filas que seleccione el usuario
-        // byte [] matriz = Helpers.seleccionarFilas();
+        byte [] matriz = Helpers.seleccionarFilas();
         
         
-        byte [] matriz = Helpers.listaPredeterminada();
+       //  byte [] matriz = Helpers.listaPredeterminada();
         
         //Creamos la clase matrizPrueba para almacenar los datos
         Matriz matrizPrueba = new Matriz(matriz);  
@@ -27,6 +27,9 @@ public class Main {
         Matriz.mostrarGrupos(matrizPrueba.getGrupoC());
         
         matrizPrueba.mostrarNoUsadas();
+        
+        System.out.println("\n============= Formula =============\n");
+        System.out.println(matrizPrueba.getFormulaFinal());
         
     }
     

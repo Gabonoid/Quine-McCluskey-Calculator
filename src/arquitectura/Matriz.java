@@ -3,6 +3,7 @@ package arquitectura;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -13,6 +14,7 @@ public class Matriz {
 
     private byte[][] matrizPrincipal;
     private byte[] filasSelect;
+    private String formulaFinal;
     private List<List<FilasSeleccionadas>> grupoA = new ArrayList<>();
     private List<List<FilasSeleccionadas>> grupoB = new ArrayList<>();
     private List<List<FilasSeleccionadas>> grupoC = new ArrayList<>();
@@ -49,6 +51,7 @@ public class Matriz {
         crearFilasSelec();
         diferenciador();
         listarNoUsadas();
+        contarNumerosRepetidos();
     }
 
     /**
@@ -239,8 +242,7 @@ public class Matriz {
      * utilizar
      */
     public void mostrarNoUsadas() {
-
-        System.out.println("\n=============Filas No usadas=============\n");
+        System.out.println("\n============= Filas No usadas =============\n");
         for (int i = 0; i < filasNoUsadas.size(); i++) {
             System.out.println(filasNoUsadas.get(i).getNombre() + " -> " + Arrays.toString(filasNoUsadas.get(i).getFila()));
         }
@@ -256,6 +258,99 @@ public class Matriz {
 
     public List<List<FilasSeleccionadas>> getGrupoC() {
         return grupoC;
+    }
+
+    public String getFormulaFinal() {
+        return formulaFinal;
+    }
+
+    public void contarNumerosRepetidos() {
+        List<FilaFinal> conteo = new ArrayList<>();
+
+        for (int i = 0; i < filasSelect.length; i++) {
+            byte contador = 0;
+            for (int j = 0; j < filasNoUsadas.size(); j++) {
+                byte[] h = filasNoUsadas.get(j).getNombreByte();
+
+                for (int k = 0; k < h.length; k++) {
+                    if (h[k] == filasSelect[i]) {
+                        contador++;
+                    }
+                }
+            }
+            conteo.add(new FilaFinal(filasSelect[i], contador));
+        }
+
+        List<FilasSeleccionadas> formula = new ArrayList<>();
+
+        for (int i = 0; i < conteo.size(); i++) {
+            if (conteo.get(i).getRepeticion() == 1) {
+
+                for (int j = 0; j < filasNoUsadas.size(); j++) {
+                    byte[] h = filasNoUsadas.get(j).getNombreByte();
+                    for (int k = 0; k < h.length; k++) {
+                        if (h[k] == conteo.get(i).getValor()) {
+                            formula.add(filasNoUsadas.get(j));
+                        }
+                    }
+                }
+            }
+        }
+
+        //eliminamos repetidos
+        HashMap<String, FilasSeleccionadas> limpiar = new HashMap<String, FilasSeleccionadas>();
+        for (FilasSeleccionadas filasSeleccionadas : formula) {
+            limpiar.put(filasSeleccionadas.getNombre(), filasSeleccionadas);
+        }
+
+        /*
+        System.out.println("\n============= Filas Final =============\n");
+        limpiar.entrySet().forEach(valor -> {
+            System.out.println(valor.getValue());
+        });
+
+        System.out.println("\n============= Lista Conteo =============\n");
+        conteo.forEach(numero -> {
+            System.out.println(numero.getValor());
+        });
+        */
+        generarVariable(limpiar);
+
+    }
+
+    public void generarVariable(HashMap<String, FilasSeleccionadas> limpiar) {
+        String FormulaFinal = "";
+        List<FilasSeleccionadas> values = new ArrayList<FilasSeleccionadas>(limpiar.values());
+
+        for (int i = 0; i < values.size(); i++) {
+            byte[] fila = values.get(i).getFila();
+            String a = asignarValor("A", fila[0]);
+            String b = asignarValor("B", fila[1]);
+            String c = asignarValor("C", fila[2]);
+            String d = asignarValor("D", fila[3]);
+            if (i == values.size()-1) {
+                FormulaFinal += (FormulaFinal != null)? (a + b + c + d):("");
+            }else{
+                FormulaFinal += (FormulaFinal != null)? (a + b + c + d + " + "):("");
+            }
+            
+        }
+        formulaFinal = FormulaFinal;
+
+    }
+
+    public String asignarValor(String letra, byte valor) {
+        String letraCom = "";
+
+        if (valor == -1) {
+            letraCom = "";
+        } else if (valor == 0) {
+            letraCom = letra + "'";
+        } else if (valor == 1) {
+            letraCom = letra;
+        }
+
+        return letraCom;
     }
 
 }

@@ -53,5 +53,10 @@ public class Helpers {
         byte[] matriz = {0,2,3,4,6,10,12,13,14,15};
         return matriz;
     }
+    
+    public static byte[] listaPredeterminada2() {
+        byte[] matriz = {0,1,2,8,10,11,14,15};
+        return matriz;
+    }
 
 }
